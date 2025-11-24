@@ -31,6 +31,27 @@ fi
 done
 
 # Option 1: Add User
+add_user() {
+    read -p "Enter new username: " username
+    read -p "Enter full name: " fullname
+
+    # Check if user already exists
+    if id "$username" &>/dev/null; then
+        echo "Error: User '$username' already exists."
+        return
+    fi
+
+    # Create user
+    useradd -m -c "$fullname" "$username"
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to add user."
+        return
+    fi
+
+    # Set password securely
+    passwd "$username"
+    echo "User '$username' added successfully."
+
 
 
 # Option 2: Modify User
