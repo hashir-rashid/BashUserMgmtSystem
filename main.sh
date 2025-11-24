@@ -32,11 +32,15 @@ done
 
 # Option 1: Add User
 
+
 # Option 2: Modify User
+
 
 # Option 3: Delete User
 
+
 # Option 4: List Users
+
 
 # Option 5: Exit
 printf 'Exiting...\n';
