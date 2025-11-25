@@ -44,16 +44,23 @@ while [ 1 ]; do
 
         # Check if user already exists
         if id "$username" &>/dev/null; then
-            echo "Error: User '$username' already exists.";
+            printf "Error: User $username already exists";
             exit 1;
+        fi
+
+        # Create new user
+        sudo useradd -m -s /bin/bash "$username";
+        if [[ $? -ne 0 ]]; then
+            printf "Error: Failed to add user"
         fi
 
         # Get password from user
         read -sp "Enter a password (minimum of 6 characters): " password;
 
-        # Add a user and set their password
-        sudo useradd -m -s /bin/bash "$username";
+        # Set the password for the new user
         echo $username:$password | sudo chpasswd;
+
+        printf "User '$username' added successfully\n"
     fi
 
     # Option 2: Modify User
@@ -63,7 +70,7 @@ while [ 1 ]; do
 
         # Check if user exists
         if ! id "$username" &>/dev/null; then
-            printf "Error: User '%s' does not exist.\n" "$username"
+            printf "Error: User '%s' does not exist\n" "$username"
             exit 1
         fi
 
@@ -107,16 +114,16 @@ while [ 1 ]; do
     fi
 
     # Option 3: Delete User
-    if [ $option -eq 3 ]; then
-        read -p "Enter username to delete: " delUser
+    if [ $selected_option -eq 3 ]; then
+        read -p "Enter username to delete: " delUser;
 
         if ! id "$delUser" &>/dev/null; then
-            printf "Error: User '%s' does not exist.\n" "$delUser"
-            exit 1
+            printf "Error: User '%s' does not exist.\n" "$delUser";
+            exit 1;
         fi
 
-        sudo userdel -r "$delUser"
-        printf "User '%s' deleted successfully.\n" "$delUser"
+        sudo userdel "$delUser";
+        printf "User '%s' deleted successfully.\n" "$delUser";
     fi
 
     # Option 4: List Users (TEMPORARY)
