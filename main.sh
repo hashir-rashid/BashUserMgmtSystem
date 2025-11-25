@@ -107,6 +107,17 @@ fi
 
 
 # Option 3: Delete User
+if [ $option -eq 3 ]; then
+    read -p "Enter username to delete: " delUser
+
+    if ! id "$delUser" &>/dev/null; then
+        printf "Error: User '%s' does not exist.\n" "$delUser"
+        exit 1
+    fi
+
+    sudo userdel -r "$delUser"
+    printf "User '%s' deleted successfully.\n" "$delUser"
+fi
 
 
 # Option 4: List Users (TEMPORARY)
