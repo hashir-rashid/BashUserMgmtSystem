@@ -58,7 +58,7 @@ while [ 1 ]; do
 
     # Option 2: Modify User
     if [ $selected_option -eq 2 ]; then
-
+        # Get the user to modify
         read -p "Enter the username you want to modify: " username
 
         # Check if user exists
@@ -67,16 +67,16 @@ while [ 1 ]; do
             exit 1
         fi
 
+        # Display modification options
         printf '\nSelect what you want to modify:\n'
         printf '1: Change Password\n'
         printf '2: Change Full Name\n'
         printf '3: Change Shell\n'
         printf '4: Cancel\n'
-
+        
         read -p "Enter an option: " modOption
 
         case $modOption in
-
             1)
                 read -sp "Enter new password: " newPassword
                 echo ""
@@ -98,12 +98,10 @@ while [ 1 ]; do
 
             4)
                 printf "Modification cancelled.\n"
-                exit 0
                 ;;
 
             *)
                 printf "Invalid option.\n"
-                exit 1
                 ;;
         esac
     fi
