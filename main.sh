@@ -54,6 +54,56 @@ if [ $option -eq 1 ]; then
 fi
 
 # Option 2: Modify User
+if [ $option -eq 2 ]; then
+
+    read -p "Enter the username you want to modify: " username
+
+    # Check if user exists
+    if ! id "$username" &>/dev/null; then
+        printf "Error: User '%s' does not exist.\n" "$username"
+        exit 1
+    fi
+
+    printf '\nSelect what you want to modify:\n'
+    printf '1: Change Password\n'
+    printf '2: Change Full Name\n'
+    printf '3: Change Shell\n'
+    printf '4: Cancel\n'
+
+    read -p "Enter an option: " modOption
+
+    case $modOption in
+
+        1)
+            read -sp "Enter new password: " newPassword
+            echo ""
+            echo "$username:$newPassword" | sudo chpasswd
+            printf "Password updated successfully.\n"
+            ;;
+
+        2)
+            read -p "Enter new first and last name: " newFirst newLast
+            sudo chfn -f "$newFirst $newLast" "$username"
+            printf "Full name updated successfully.\n"
+            ;;
+
+        3)
+            read -p "Enter new shell (e.g., /bin/bash): " newShell
+            sudo chsh -s "$newShell" "$username"
+            printf "Shell updated successfully.\n"
+            ;;
+
+        4)
+            printf "Modification cancelled.\n"
+            exit 0
+            ;;
+
+        *)
+            printf "Invalid option.\n"
+            exit 1
+            ;;
+    esac
+fi
 
 
 # Option 3: Delete User
