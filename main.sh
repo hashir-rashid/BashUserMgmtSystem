@@ -24,11 +24,18 @@ while [ 1 ]; do
     printf '4: List All Users\n'; 
     printf '5: Exit\n';
 
-    # Get selected option from user
-    selected_option=$(select_options);
+    # Keep asking for input until a valid option is selected
+    option=-1;
+    while [ $option -lt 1 ] || [ $option -gt 5 ]; do
+        read -p "Enter an option: " option;
+
+        if [ $option -lt 1 ] || [ $option -gt 5 ]; then
+            printf 'Invalid Option\n\n';
+        fi
+    done
 
     # Option 1: Add User
-    if [ $selected_option -eq 1 ]; then
+    if [ $option -eq 1 ]; then
         # Setup a trap in case an error occurs
         trap 'echo "An error occurred. Ensure your password is at least 6 characters long. Exiting..."; exit 1;' ERR;
 
@@ -64,7 +71,7 @@ while [ 1 ]; do
     fi
 
     # Option 2: Modify User
-    if [ $selected_option -eq 2 ]; then
+    if [ $option -eq 2 ]; then
         # Get the user to modify
         read -p "Enter the username you want to modify: " username
 
@@ -114,7 +121,7 @@ while [ 1 ]; do
     fi
 
     # Option 3: Delete User
-    if [ $selected_option -eq 3 ]; then
+    if [ $option -eq 3 ]; then
         read -p "Enter username to delete: " delUser;
 
         if ! id "$delUser" &>/dev/null; then
@@ -127,12 +134,12 @@ while [ 1 ]; do
     fi
 
     # Option 4: List Users (TEMPORARY)
-    if [ $selected_option -eq 4 ]; then
+    if [ $option -eq 4 ]; then
         getent passwd;
     fi
 
     # Option 5: Exit
-    if [ $selected_option -eq 5 ]; then
+    if [ $option -eq 5 ]; then
         printf 'Exiting...\n';
         exit 1;
     fi
