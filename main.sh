@@ -46,12 +46,12 @@ while true; do
             # Option 1: Add User
             trap 'echo "An error occurred. Ensure your password is at least 6 characters long. Returning to menu...";' ERR
 
-            first_name=''
-            last_name=''
+            firstName=''
+            lastName=''
             username=''
             password=''
 
-            read -rp "Enter your first and last name (with a space in between): " first_name last_name
+            read -rp "Enter your first and last name (with a space in between): " firstName lastName
             read -rp "Enter a username: " username
 
             # Check if user already exists
@@ -66,6 +66,9 @@ while true; do
                 printf "Error: Failed to add user.\n"
                 continue
             fi
+
+            # Give user their names
+            sudo chfn -f "$firstName $lastName" "$username"
 
             # Get password from user
             read -rsp "Enter a password (minimum of 6 characters): " password
