@@ -51,6 +51,7 @@ while true; do
             username=''
             password=''
 
+            # Get names from user
             read -rp "Enter your first and last name (with a space in between): " firstName lastName
             read -rp "Enter a username: " username
 
@@ -72,7 +73,6 @@ while true; do
 
             # Get password from user
             read -rsp "Enter a password (minimum of 6 characters): " password
-            echo
 
             # Set the password for the new user
             echo "$username:$password" | sudo chpasswd
