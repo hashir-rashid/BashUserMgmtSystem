@@ -1,3 +1,5 @@
+#!/bin/bash
+
 LOG_FILE="user_mgmt.log"
 
 log_action() {
