@@ -1,5 +1,5 @@
 # User Management System Using Bash
-_short description here_
+This project implements a Linux-based user account management system using Bash scripts. The script automates administrative tasks, including adding, modifying, deleting, and listing system users and groups. It provides a menu-driven, user-friendly interface while ensuring security through proper password handling (i.e. hashing). It was created to simplify routine system administration and provide an extensible foundation for future enhancements.
 
 ## Requirements
 - Ubuntu (latest version)
@@ -27,3 +27,4 @@ chmod u+x main.sh
 sudo apt install dos2unix
 dos2unix `file_name_here`
 ```
+
