@@ -27,7 +27,7 @@ while true; do
     printf '10: Exit\n'
 
     option=0
-    while [ "$option" -lt 1 ] || [ "$option" -gt 9 ]; do
+    while [ "$option" -lt 1 ] || [ "$option" -gt 10 ]; do
         read -rp "Enter an option: " option
 
         # Check that option is a number
@@ -37,7 +37,7 @@ while true; do
             continue
         fi
 
-        if [ "$option" -lt 1 ] || [ "$option" -gt 9 ]; then
+        if [ "$option" -lt 1 ] || [ "$option" -gt 10 ]; then
             echo "Invalid option. Please try again."
         fi
     done
