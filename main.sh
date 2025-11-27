@@ -42,6 +42,7 @@ while true; do
         fi
     done
 
+    # Switch case for each option
     case "$option" in
         1)
             # Option 1: Add User

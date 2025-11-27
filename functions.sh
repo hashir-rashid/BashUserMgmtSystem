@@ -3,22 +3,27 @@
 LOG_FILE="user_mgmt.log"
 
 log_action() {
+    # Write the date/time and log description to the log file
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
 }
 
 create_group() {
+    # Get group from user
     read -rp "Enter new group name: " group
 
+    # Check if input is empoty
     if [ -z "$group" ]; then
         echo "Error: group name cannot be empty."
         return 1
     fi
 
+    # Check if group exists
     if getent group "$group" > /dev/null; then
         echo "Error: group '$group' already exists."
         return 1
     fi
 
+    # Add the group
     if sudo groupadd "$group"; then
         echo "Group '$group' created successfully."
         log_action "Created group '$group'"
@@ -29,18 +34,22 @@ create_group() {
 }
 
 delete_group() {
+    # Get group name
     read -rp "Enter group name to delete: " group
 
+    # Check if input is empoty
     if [ -z "$group" ]; then
         echo "Error: group name cannot be empty."
         return 1
     fi
 
+    # Check if group exists
     if ! getent group "$group" > /dev/null; then
         echo "Error: group '$group' does not exist."
         return 1
     fi
 
+    # Delete group
     if sudo groupdel "$group"; then
         echo "Group '$group' deleted successfully."
         log_action "Deleted group '$group'"
@@ -51,14 +60,17 @@ delete_group() {
 }
 
 add_user_to_group() {
+    # Get user and group
     read -rp "Enter username: " user
     read -rp "Enter group name: " group
 
+    # Check if either input is empoty
     if [ -z "$user" ] || [ -z "$group" ]; then
         echo "Error: username and group must not be empty."
         return 1
     fi
 
+    # Check if user and group exist
     if ! id "$user" &>/dev/null; then
         echo "Error: user '$user' does not exist."
         return 1
@@ -69,6 +81,7 @@ add_user_to_group() {
         return 1
     fi
 
+    # Add user to specified group
     if sudo usermod -aG "$group" "$user"; then
         echo "User '$user' added to group '$group'."
         log_action "Added user '$user' to group '$group'"
@@ -79,22 +92,22 @@ add_user_to_group() {
 }
 
 remove_user_from_group() {
+    # Get user and group
     read -rp "Enter username: " user
     read -rp "Enter group name: " group
 
-    # Check if fields are empty
+    # Check if either input is empty
     if [ -z "$user" ] || [ -z "$group" ]; then
         echo "Error: username and group must not be empty."
         return 1
     fi
 
-    # Check if user exists
+    # Check if user and group exist
     if ! id "$user" &>/dev/null; then
         echo "Error: user '$user' does not exist."
         return 1
     fi
 
-    # Check if group exists
     if ! getent group "$group" > /dev/null; then
         echo "Error: group '$group' does not exist."
         return 1
@@ -106,6 +119,7 @@ remove_user_from_group() {
         return 1
     fi
 
+    # Remove user from specified group
     if sudo gpasswd --delete "$user" "$group"; then
         echo "User '$user' removed to group '$group'."
         log_action "Removed user '$user' to group '$group'"
@@ -116,18 +130,22 @@ remove_user_from_group() {
 }
 
 list_groups_for_user() {
+    # Get user
     read -rp "Enter username: " user
 
+    # Check if input is empty
     if [ -z "$user" ]; then
         echo "Error: username cannot be empty."
         return 1
     fi
 
+    # Check if user exists
     if ! id "$user" &>/dev/null; then
         echo "Error: user '$user' does not exist."
         return 1
     fi
 
+    # List all groups for a user
     echo "Groups for user '$user':"
     groups "$user"
 }
