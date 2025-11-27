@@ -145,10 +145,10 @@ while true; do
             ;;
 
         4)
-	    # Option 4: List Users
-	    echo "Regular users on this system:"
-	    getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { printf "%-20s %s\n", $1, $6 }'
-	    ;;
+		    # Option 4: List Users
+		    echo "Regular users on this system:"
+		    getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { printf "%-20s %s\n", $1, $6 }'
+		    ;;
 
 
         5)
