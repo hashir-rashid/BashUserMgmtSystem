@@ -78,6 +78,43 @@ add_user_to_group() {
     fi
 }
 
+remove_user_from_group() {
+    read -rp "Enter username: " user
+    read -rp "Enter group name: " group
+
+    # Check if fields are empty
+    if [ -z "$user" ] || [ -z "$group" ]; then
+        echo "Error: username and group must not be empty."
+        return 1
+    fi
+
+    # Check if user exists
+    if ! id "$user" &>/dev/null; then
+        echo "Error: user '$user' does not exist."
+        return 1
+    fi
+
+    # Check if group exists
+    if ! getent group "$group" > /dev/null; then
+        echo "Error: group '$group' does not exist."
+        return 1
+    fi
+
+    # Check if user belongs to specified group
+    if ! (id -nG "$user" | grep -qw "$group"); then
+        echo $user does not belong to $group
+        return 1
+    fi
+
+    if sudo gpasswd --delete "$user" "$group"; then
+        echo "User '$user' removed to group '$group'."
+        log_action "Removed user '$user' to group '$group'"
+    else
+        echo "Error: failed to remove user '$user' from group '$group'."
+        return 1
+    fi
+}
+
 list_groups_for_user() {
     read -rp "Enter username: " user
 

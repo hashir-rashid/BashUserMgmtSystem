@@ -22,8 +22,9 @@ while true; do
     printf '5: Create Group\n'
     printf '6: Delete Group\n'
     printf '7: Add User to Group\n'
-    printf '8: List Groups for a User\n'
-    printf '9: Exit\n'
+    printf '8: Remove User from Group\n'
+    printf '9: List Groups for a User\n'
+    printf '10: Exit\n'
 
     option=0
     while [ "$option" -lt 1 ] || [ "$option" -gt 9 ]; do
@@ -157,12 +158,18 @@ while true; do
             add_user_to_group
             ;;
 
-        8)
-            # Option 8: List Groups for a User
-            list_groups_for_user
+        8) 
+            # Option 8: Remove User from Group
+            remove_user_from_group
             ;;
 
-        9)
+        9)  
+            # Option 9: List Groups for a User
+            list_groups_for_user
+            ;; 
+
+        10)
+            # Exit
             printf 'Exiting...\n'
             exit 0
             ;;
