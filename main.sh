@@ -79,6 +79,7 @@ while true; do
             echo "$username:$password" | sudo chpasswd
 
             printf "User '%s' added successfully.\n" "$username"
+            log_action "Created user $username"
             ;;
 
         2)
@@ -105,16 +106,19 @@ while true; do
                     echo
                     echo "$username:$newPassword" | sudo chpasswd
                     printf "Password updated successfully.\n"
+                    log_action "Updated password for $username"
                     ;;
                 2)
                     read -rp "Enter new first and last name: " newFirst newLast
                     sudo chfn -f "$newFirst $newLast" "$username"
                     printf "Full name updated successfully.\n"
+                    log_action "Updated name for user $username"
                     ;;
                 3)
                     read -rp "Enter new shell (e.g., /bin/bash): " newShell
                     sudo chsh -s "$newShell" "$username"
                     printf "Shell updated successfully.\n"
+                    log_action "Changed shell to $newShell"
                     ;;
                 4)
                     printf "Modification cancelled.\n"
@@ -136,6 +140,7 @@ while true; do
 
             sudo userdel "$delUser"
             printf "User '%s' deleted successfully.\n" "$delUser"
+            log_action "Deleted user $delUser"
             ;;
 
         4)
@@ -144,7 +149,7 @@ while true; do
             ;;
 
         5)
-            # Option 5: Create Group (implemented in functions.sh)
+            # Option 5: Create Group
             create_group
             ;;
 
