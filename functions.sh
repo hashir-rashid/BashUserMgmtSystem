@@ -121,7 +121,7 @@ remove_user_from_group() {
 
     # Remove user from specified group
     if sudo gpasswd --delete "$user" "$group"; then
-        echo "User '$user' removed to group '$group'."
+        echo "User '$user' removed from group '$group'."
         log_action "Removed user '$user' from group '$group'"
     else
         echo "Error: failed to remove user '$user' from group '$group'."
